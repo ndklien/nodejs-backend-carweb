@@ -23,6 +23,7 @@ exports.authToken = async (req, res, next) => {
         }
 
         req.user = userLoad;
+        req.userID = userLoad._id;
         req.token = token;
         next();
     } catch (err) {
@@ -61,7 +62,7 @@ exports.isAdmin = async (req, res, next) => {
         if (err) return res.status(500).send({ message: err });
 
         Role.find(
-            { _id: { $in: user.role }},
+            { _id: { $in: user.roles }},
             (err, roles) => {
                 if (err) return res.status(500).send({ message: err });
 

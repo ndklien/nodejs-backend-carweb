@@ -1,88 +1,27 @@
-const jwt = require('jsonwebtoken');
-const jwkToPem = require('jwk-to-pem');
+'use strict';
 const Post = require('../models/post.model.js');
 const User = require('../models/user.model.js');
-const { createPostValidator } = require('../validations/authentication');
 
-// Post controll for user
-exports.getAllPost = async (req, res) => {
-    try {
-        const userPostList = await Post.find({ postedBy: req.user._id });
+const mongoose = require('mongoose');
 
-        return res.status(200).json({
-            confirmation: 'Succeed.',
-            data: userPostList,
+// read all Posts
+exports.getAll_Posts = (req, res) => {
+    Post.find({})
+        .then(data => {
+            if (!data) return res.status(400).send({ message: "Cannot find any Posts"});
+
+            else return res.json(data);
         })
-    } catch (err) {
-        return res.status(400).json({
-            err,
-            message: 'Error in getAllPost'
-        });
-    };
+        .catch(err => res.status(400).send({ message: err.message || "Failed to get all Posts"}));
 };
 
-
-// Create new post 
-exports.createNewPost = async (req, res) => {
-    const { err } = createPostValidator(req.body);
-
-    if (err) {
-        return res.status(422).send(err.details[0].message);
-    }
-
-    var item = {
-        title: req.body.title,
-        postedBy: req.user._id,
-        dateCreated: Date.parse(req.body.dateCreated),
-        postContent: req.body.postContent,
-        postPics: req.body.postPics,
-
-        contactProvince: req.body.contactProvince,
-        contactDistrict: req.body.contactDistrict,
-        contactPhone: req.body.contactPhone,
-
-        carBrand: req.body.carBrand,
-        carModel: req.body.carModel,
-        carType: req.body.carType,
-        carSeats: Number(req.body.carSeats),
-        carColor: req.body.carColor,
-        carFuelType: req.body.carFuelType,
-        carOdometer: Number(req.body.carOdometer),
-        carPrice: Number(req.body.carPrice)
-    };
-
-    const newPost = new Post(item);
-
-    newPost.save()
-        .then(() => res.json('Post added!'))
-        .catch(err => res.status(400).json('Err' + err)); 
-};
-
-
-// Read distinct post
+// Xem bài đăng
 exports.readPost = (req, res) => {
-    Post.findById(req.params.id)
-        .then(post => res.json(post))
-        .catch(err => res.status(400).json('Error '+ err));
-};
+    Post.find({ slug: req.params.slug })
+        .then(data => {
+            if (!data) return res.status(404).send({ message: "Post with id " + id + " not found."});
 
-
-// Delete distinct post
-exports.deletePost = (req, res) => {
-    Post.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Post ' + req.params.id +' deleted!'))
-        .catch(err => res.status(400).json('Err '+ err));
-};
-
-// Edit distinct post
-exports.editPost = (req, res) => {
-    if (req.isAuthenticated() && req.Post.postedBy == req.session.User.ObjectId) {
-        console.log(req.session.passport.user);
-        Post.findByIdAndUpdate(req.params.id)
-            .then(() => res.json('Post '+ res.params.id + ' updated!'))
-            .catch(err => res.status(400).json('Err ' + err));
-
-    } else {
-        res.send("You don't have the permission to access.");
-    }
+            else return res.json(data);
+        })
+        .catch( err => res.status(500).send({ message: err.message || "Failed to read Post with id " + id }));
 };

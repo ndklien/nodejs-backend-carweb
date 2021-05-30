@@ -16,6 +16,8 @@ const port = process.env.PORT || 5000;
 const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
 const authenticateRouter = require('./routes/authentication');
+const articleRouter = require('./routes/articles');
+const adminRouter = require('./routes/admin');
 
 app.use(cors());
 app.use(express.json());
@@ -37,6 +39,8 @@ connection.once('open', () => {
 app.use('/api/user', userRouter);
 app.use('/api/post', postRouter);
 app.use('/api/auth', authenticateRouter);
+app.use('/api/news', articleRouter);
+app.use('/api/admin', adminRouter);
 
 app.get('/', (req, res) => {
     res.render('index.ejs');

@@ -104,6 +104,7 @@ exports.login = (req, res) => {
             .json({
                 user,
                 roles: authorities,
+                userToken: token,
                 message: "Login successfully"
             });
     });

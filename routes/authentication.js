@@ -15,7 +15,10 @@ router.post('/dangki', checkRolesExist, authController.registerUser);
 // Login account: tested
 router.post('/dangnhap', authController.login);
 
+// Logout in all device
+router.post('/dangxuat-all', authToken, authController.logoutAll);
+
 // Logout in one device
-router.post('/dangxuat', authToken, authController.logoutAll);
+router.post('/dangxuat', authToken, authController.logout);
 
 module.exports = router;

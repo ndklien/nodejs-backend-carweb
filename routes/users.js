@@ -1,12 +1,11 @@
 'use strict';
 const router = require('express').Router();
 const { authToken, isAdmin, isUser } = require('../middlewares/auth');
-const db = require('../models');
-const User = db.user;
-const Role = db.role;
-
-const postControl = require('../controllers/post.controller');
+// const db = require('../models');
+// const User = db.user;
+// const Role = db.role;
 const { userBoard, adminBoard } = require('../controllers/user.controller');
+const userControll = require('../controllers/user.controller');
 
 // Endpoint starts with /api/user
 
@@ -15,6 +14,24 @@ router.get('/userboard', [authToken, isUser], userBoard );
 
 router.get('/adminboard', [authToken, isAdmin], adminBoard );
 
-// Delete post 
+
+// Post related router 
+
+// Endpoint starts with /api/user
+// Tạo bài đăng bán
+router.post('/post/create', [authToken, isUser], userControll.createNewPost);
+
+// Sửa bài đăng bán
+router.put('/post/:id/edit', [authToken, isUser], userControll.updatePost);
+
+// Xóa bài đăng bán
+router.delete('/post/:id/delete', [authToken, isUser], userControll.deletePost);
+
+// Xoá tất cả bài đăng
+router.delete('/post/deleteall', [authToken, isUser], userControll.deleteAllPosts);
+
+// Lấy danh sách tất cả các bài đăng của người đăng
+router.get('/list', [authToken, isUser], userControll.getUserPost);
+
 
 module.exports = router;
