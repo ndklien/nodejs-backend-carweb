@@ -38,10 +38,10 @@ const postSchema = new Schema({
     postContent: {
         type: String,
     },
-    postPics: [{
-        data: Buffer,
-        type: String,
-        // required: true,
+    postImage: [{
+        image: {
+            type: String
+        }
     }],
     // Xe nhập khẩu hay nội địa
     carType: {

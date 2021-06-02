@@ -31,31 +31,48 @@ exports.createNewPost = (req, res) => {
     
     if (err) return res.status(422).send(err.details[0].message);
 
+    const { title, postContent, contactDistrict, contactProvince, contactPhone, carBrand, carModel, carType, 
+    carSeats, carColor, carFuelType, carOdometer, carPrice, postedBy } = req.body;
+    
     const newPost = new Post({
-        title: req.body.title,
-        postedBy: mongoose.Types.ObjectId(req.body.ObjectId),
-        postContent: req.body.postContent,
-        postPics: req.body.postPics,
+        title,
+        postedBy,
+        postContent,
+        // postImage,
 
-        contactProvince: req.body.contactProvince,
-        contactDistrict: req.body.contactDistrict,
-        contactPhone: req.body.contactPhone,
+        contactProvince,
+        contactDistrict,
+        contactPhone,
 
-        carBrand: req.body.carBrand,
-        carModel: req.body.carModel,
-        carType: req.body.carType,
-        carSeats: req.body.carSeats,
-        carColor: req.body.carColor,
-        carFuelType: req.body.carFuelType,
-        carOdometer: req.body.carOdometer,
-        carPrice: req.body.carPrice
+        carBrand,
+        carModel,
+        carType,
+        carSeats,
+        carColor,
+        carFuelType,
+        carOdometer,
+        carPrice
     });
     newPost.postedBy = req.user;
+
+    if (req.files === 'undefined') {
+        console.log("No images");
+    } else {
+        let postImage = [];
+
+        if (req.files.length > 0) {
+            postImage = req.files.map((file) => {
+                return { image: file.location };
+            });
+        };
+
+        newPost.postImage = postImage;
+    }
 
     // newUserPost.save(newUserPost);
 
     newPost.save(newPost)
-        .then(data => res.json(data))
+        .then(data => res.json({ data }))
         .catch(err => res.status(500).send({
             message: err.message || 'Failed to create new Post'
         }));

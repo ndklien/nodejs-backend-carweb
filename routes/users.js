@@ -7,6 +7,8 @@ const { authToken, isAdmin, isUser } = require('../middlewares/auth');
 const { userBoard, adminBoard } = require('../controllers/user.controller');
 const userControll = require('../controllers/user.controller');
 
+const { uploadS3post,  } = require('../middlewares/s3');
+
 // Endpoint starts with /api/user
 
 // Lấy thông tin người dùng
@@ -19,7 +21,7 @@ router.get('/adminboard', [authToken, isAdmin], adminBoard );
 
 // Endpoint starts with /api/user
 // Tạo bài đăng bán
-router.post('/post/create', [authToken, isUser], userControll.createNewPost);
+router.post('/post/create', [authToken, isUser], uploadS3post.array("image", 9), userControll.createNewPost);
 
 // Sửa bài đăng bán
 router.put('/post/:id/edit', [authToken, isUser], userControll.updatePost);

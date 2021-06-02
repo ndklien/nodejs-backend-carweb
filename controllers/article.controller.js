@@ -32,12 +32,20 @@ exports.createNews = (req, res) => {
 
     if (err) return res.status(422).send(err.details[0].message);
 
+    const { title, content } = req.body;
+
     const newsArticle = new Article({
-        title: req.body.title,
-        content: req.body.content,
+        title,
+        content
     });
 
     newsArticle.postedBy = req.user;
+
+    if (req.file === 'undefined') {
+        console.log("No Image");
+    } else {
+        newsArticle.newsImage = req.file.location;
+    }
 
     newsArticle.save(newsArticle)
         .then(data => res.json(data))

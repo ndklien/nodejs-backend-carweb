@@ -48,13 +48,13 @@ Content-Type: application/json
 
 ### Test đăng nhập 
 GET http://localhost:5000/api/user/userboard
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIzNDYwMTIsImV4cCI6MTYyMjQzMjQxMn0.MlVPdLFoUIr_3q5QBhscNtqX2LOgpnn3J_PdOMmPZDU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI2MzgwMDUsImV4cCI6MTYyMjcyNDQwNX0._oxklI7KOAr7fM18iSCG1sEUxYIiWC8ZT7hTmDctDq4
 
 ###
 
 ### Tạo bài viết
 POST http://localhost:5000/api/user/post/create
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIzMzAyNjAsImV4cCI6MTYyMjQxNjY2MH0.pyQXTE3c2vkkAQqFDNk_MAK4f241W-MYuxPZP3sVaAU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI2Mzk5NzIsImV4cCI6MTYyMjcyNjM3Mn0.o2w4N7jhOFLDHxCbrtng_GR_qIwrldFMlyKLqcXp1FI
 Content-Type: application/json
 
 { 
@@ -86,7 +86,8 @@ GET http://localhost:5000/api/post/all
 
 #### Xóa tất cả post của user
 DELETE http://localhost:5000/api/user/post/deleteall
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIzMzAyNjAsImV4cCI6MTYyMjQxNjY2MH0.pyQXTE3c2vkkAQqFDNk_MAK4f241W-MYuxPZP3sVaAU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI2MzgwMDUsImV4cCI6MTYyMjcyNDQwNX0._oxklI7KOAr7fM18iSCG1sEUxYIiWC8ZT7hTmDctDq4
+
 
 ###
 
@@ -153,3 +154,5 @@ Content-Type: application/json
 GET http://localhost:5000/api/news/nhung-diem-can-luu-y-khi-mua-ban-xe
 
 ###
+
+

@@ -6,6 +6,8 @@ const adminControll = require('../controllers/admin.controller');
 
 const { authToken, isAdmin } = require('../middlewares/auth');
 
+const { uploadS3news } = require('../middlewares/s3');
+
 // Endpoint starts with /api/admin
 
 // Post Related
@@ -14,7 +16,7 @@ router.delete('/post/deleteall', [authToken, isAdmin], adminControll.deleteAll_P
 
 // News Related
 // Tạo tin tức
-router.post('/news/create', [authToken, isAdmin], articleControll.createNews);
+router.post('/news/create', [authToken, isAdmin], uploadS3news.single("image") , articleControll.createNews);
 
 // Sửa tin tức
 router.put('/news/:id/edit', [authToken, isAdmin], articleControll.updateNews);

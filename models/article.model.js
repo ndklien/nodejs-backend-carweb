@@ -21,7 +21,10 @@ const articleSchema = new Schema({
         type: String, 
         slug: "title",
         unique: true,
-    }
+    }, 
+    newsImage: {
+        type: String,
+    },
 }, {
     timestamps: true,
     toJSON: { virtuals: true },
