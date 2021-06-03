@@ -27,4 +27,7 @@ router.delete('/news/:id/delete', [authToken, isAdmin], articleControll.deleteAr
 // Xóa tất cả tin tức
 router.delete('/news/deleteall', [authToken, isAdmin], articleControll.deleteAll_News);
 
+// User related
+router.get('/users', [authToken, isAdmin], adminControll.getAll_User);
+
 module.exports = router;

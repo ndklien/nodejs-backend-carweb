@@ -155,4 +155,6 @@ GET http://localhost:5000/api/news/nhung-diem-can-luu-y-khi-mua-ban-xe
 
 ###
 
-
+### Lấy danh sách người dùng
+GET http://localhost:5000/api/admin/users
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjI2ODI1MDMsImV4cCI6MTYyMjc2ODkwM30.qiVXwuGbi-rx2kRVF88Uu-rL2LeWlGYaSMXsc6qmEgk
