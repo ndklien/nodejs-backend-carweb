@@ -6,9 +6,6 @@ const mongoose = require('mongoose');
 
 const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
-const Post = require('../models/post.model.js');
-const User = require('../models/user.model.js');
-const { createPostValidator } = require('../validations/authentication');
 
 //Search
 exports.suggestionPost = async (req, res) => {

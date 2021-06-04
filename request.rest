@@ -21,8 +21,7 @@ Content-Type: application/json
 
 ##### Lấy danh sách bài viết được đăng bởi người dùng đó
 GET http://localhost:5000/api/user/list
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI5Y2Q5MTFjMGVkOTFmY2MxNGNmNDIiLCJpYXQiOjE2MjI4MTc1MTMsImV4cCI6MTYyMjkwMzkxM30.JpJ3Y3dpqPSac9f7wIXvEsQjHOcDgXzNA25hG91Sn20
 ####
 
 ### Đăng nhập admin
@@ -41,7 +40,7 @@ POST http://localhost:5000/api/auth/dangnhap
 Content-Type: application/json
 
 {
-    "email": "chloe93@gmail.com",
+    "email": "chloe90@gmail.com",
     "password": "chloe01"
 }
 
@@ -49,11 +48,6 @@ Content-Type: application/json
 ### Test đăng nhập 
 GET http://localhost:5000/api/user/userboard
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIwMzI4NTgsImV4cCI6MTYyMjExOTI1OH0.sUB-iaPA3XN9OnVOvbKYItSvWosNlLJ00yLbOjEgHoY
-
-### Lấy bài viết đăng bởi người dùng
-GET http://localhost:5000/user/posted-list
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE2OTIzMmE5ZjY4ZDJlNTQyODUzYTIiLCJpYXQiOjE2MjE5NTY5NzEsImV4cCI6MTYyMjA0MzM3MX0.NHez8wZA_pAiWhZbxshlR3__BepcxNGs5NPH047xYEQ
-####
 
 ### Đăng xuất tất cả
 POST http://localhost:5000/api/auth/dangxuat 
@@ -89,7 +83,7 @@ Authorization:
 
 ### Tạo bài viết
 POST http://localhost:5000/api/user/post/create
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI5Y2Q5MTFjMGVkOTFmY2MxNGNmNDIiLCJpYXQiOjE2MjI4MTc1MTMsImV4cCI6MTYyMjkwMzkxM30.JpJ3Y3dpqPSac9f7wIXvEsQjHOcDgXzNA25hG91Sn20
 Content-Type: application/json
 
 { 
@@ -178,8 +172,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2Ew
 
 ### Sửa tin tức
 PUT http://localhost:5000/api/admin/news/60b32cf9e3d32011709d8064/edit
-# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIzNDk4MDgsImV4cCI6MTYyMjQzNjIwOH0.PNDSzFrMD9ZI5q0DrMopq1e7vG4XreXQy86Z-LlUYvE
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIzNDYwMTIsImV4cCI6MTYyMjQzMjQxMn0.MlVPdLFoUIr_3q5QBhscNtqX2LOgpnn3J_PdOMmPZDU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI5Y2Q5MTFjMGVkOTFmY2MxNGNmNDIiLCJpYXQiOjE2MjI4MTc1MTMsImV4cCI6MTYyMjkwMzkxM30.JpJ3Y3dpqPSac9f7wIXvEsQjHOcDgXzNA25hG91Sn20
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIzNDYwMTIsImV4cCI6MTYyMjQzMjQxMn0.MlVPdLFoUIr_3q5QBhscNtqX2LOgpnn3J_PdOMmPZDU
 Content-Type: application/json
 
 {
