@@ -1,0 +1,86 @@
+### Đăng kí
+POST http://localhost:5000/api/auth/dangki
+Content-Type: application/json
+
+{
+    "fullname": "Chloe Ting",
+    "email": "chloe94@gmail.com",
+    "password": "chloe01",
+}
+
+#### Đăng kí Admin
+POST http://localhost:5000/api/auth/dangki
+Content-Type: application/json
+
+{
+    "fullname": "Mei Mei",
+    "email": "tranthanhmaihbt@gmail.com",
+    "password": "mei",
+    "roles": ["user", "admin"]
+}
+
+##### Lấy danh sách bài viết được đăng bởi người dùng đó
+GET http://localhost:5000/api/user/posted-list
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE2OTIzMmE5ZjY4ZDJlNTQyODUzYTIiLCJpYXQiOjE2MjE2NjQ3NjAsImV4cCI6MTYyMTc1MTE2MH0.LTmdp6LuDJ-TQfjoUvigJD36tTb0Pmo1OxrJufpbDsY
+
+####
+
+### Đăng nhập
+POST http://localhost:5000/api/auth/dangnhap
+Content-Type: application/json
+
+{
+    "email": "ndklien@gmail.com",
+    "password": "ndklien01"
+}
+
+###
+
+### Đăng nhập Admin
+POST http://localhost:5000/api/auth/dangnhap
+Content-Type: application/json
+
+{
+    "email": "chloe93@gmail.com",
+    "password": "chloe01"
+}
+
+
+### Test đăng nhập 
+GET http://localhost:5000/api/user/userboard
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIwMzI4NTgsImV4cCI6MTYyMjExOTI1OH0.sUB-iaPA3XN9OnVOvbKYItSvWosNlLJ00yLbOjEgHoY
+
+### Lấy bài viết đăng bởi người dùng
+GET http://localhost:5000/user/posted-list
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE2OTIzMmE5ZjY4ZDJlNTQyODUzYTIiLCJpYXQiOjE2MjE5NTY5NzEsImV4cCI6MTYyMjA0MzM3MX0.NHez8wZA_pAiWhZbxshlR3__BepcxNGs5NPH047xYEQ
+####
+
+### Đăng xuất tất cả
+POST http://localhost:5000/api/auth/dangxuat 
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIwMzE4NTcsImV4cCI6MTYyMjExODI1N30.JBBxjaDp_Dnz3r5EoBeqUU5cVRk3qCSaPla39vpb9mU
+
+####Đăng kí
+POST http://localhost:5000/api/auth/dangki
+Content-Type: application/json
+
+{
+    "fullname": "Mei",
+    "email": "ie104.team1@gmail.com",
+    "password": "meimei"
+}
+####Forgot pass
+POST http://localhost:5000/api/auth/forgotpassword
+Content-Type: application/json
+
+{
+    "email": "ie104.team1@gmail.com"
+}
+
+####Reset pass
+POST http://localhost:5000/api/auth/resetpassword
+Content-Type: application/json
+
+{
+    "newPass": "mei",
+    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI4ZjM5NDJlMTNiODMwZjg0M2JhNzYiLCJpYXQiOjE2MjI3NzA3NTcsImV4cCI6MTYyMjg1NzE1N30.DbCEKhQRXQ24WeMKqubK4Neufvgu14JAUgFwXBfPGpE"
+}

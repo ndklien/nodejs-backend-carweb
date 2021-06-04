@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+
+<body>
+    <form method="POST" action="/dangki">
+        <label name="fullname">Họ tên</label>
+        <input type="text" name="fullname" id="fullname"/>
+
+        <label name="email">Email</label>
+        <input type="email" name="email" id="email" />
+
+        <label name="password">Mật khẩu</label>
+        <input type="password" name="password" id="password" />
+        
+        <input type="submit" value="Đăng nhập"  />
+    </form>
+</body>
+
+</html>
