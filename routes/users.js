@@ -32,7 +32,7 @@ router.delete('/post/:id/delete', [authToken, isUser], userControll.deletePost);
 // Xoá tất cả bài đăng
 router.delete('/post/deleteall', [authToken, isUser], userControll.deleteAllPosts);
 
-// Lấy danh sách tất cả các bài đăng của người đăng
+// Lấy danh sách tất cả các bài đăng của người đăng - có phân quyền để truy cập
 router.get('/list', [authToken, isUser], userControll.getUserPost);
 
 

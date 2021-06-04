@@ -11,5 +11,7 @@ router.get('/all', postControll.getAll_Posts);
 // Xem bài đăng
 router.get('/:slug', postControll.readPost);
 
+// Lấy danh sách bài đăng theo id người dùng
+router.get('/list/:userID', postControll.getUserPost);
 
 module.exports = router;

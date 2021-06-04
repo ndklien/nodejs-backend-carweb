@@ -4,15 +4,15 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const Article = require('../models/article.model');
+const User = require('../models/user.model');
 const { createArticleValidator } = require('../validations/authentication');
 
 // Lấy danh sách tin tức
 exports.getAllNews = (req, res) => {
     Article.find({})
-        .then(data => {
-            if (!data) return res.status(404).send({ message: "Cannot get all News Articles" });
-            
-            else return res.json(data);
+        .then(articles => {
+            if (!articles) return res.status(404).send({ message: "Cannot get all News Articles" });
+            else return res.json(articles);
         })
         .catch(err => res.status(400).send({ message: err.message || "Failed to get all News Articles" }));
 };
@@ -22,7 +22,22 @@ exports.readNews = (req, res) => {
     Article.findOne({ slug: req.params.slug })
         .then(data => {
             if (!data) return res.status(404).send({ message: "Cannot get Article with slug " + req.params.slug });
-            else return res.json(data);
+            else {
+                const authorID = data.postedBy;
+                User.findOne({ _id: authorID })
+                    .then(author => {
+                        if (!author) return res.status(404).send({ message: "Cannot find author with id" + authorID });
+                        else {
+                            const authorName = author.fullname;
+                            return res.json({
+                                article: data,
+                                authorName: authorName
+                            });
+                        }
+                    })
+                    .catch(err => res.status(500).send({ message: err.message || "Failed to get Author with authorID"}));
+                // return res.json(data);
+            }
         })
         .catch(err => res.status(500).send({ message: err.message || "Failed to get Article with slug " + req.params.slug }));
 };

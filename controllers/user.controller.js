@@ -55,7 +55,7 @@ exports.createNewPost = (req, res) => {
     });
     newPost.postedBy = req.user;
 
-    if (req.files === 'undefined') {
+    if (!req.files) {
         console.log("No images");
     } else {
         let postImage = [];
@@ -72,7 +72,7 @@ exports.createNewPost = (req, res) => {
     // newUserPost.save(newUserPost);
 
     newPost.save(newPost)
-        .then(data => res.json({ data }))
+        .then(data => res.json({ post: data, userName: req.user.fullname }))
         .catch(err => res.status(500).send({
             message: err.message || 'Failed to create new Post'
         }));

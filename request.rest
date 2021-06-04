@@ -54,7 +54,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJi
 
 ### Tạo bài viết
 POST http://localhost:5000/api/user/post/create
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI2Mzk5NzIsImV4cCI6MTYyMjcyNjM3Mn0.o2w4N7jhOFLDHxCbrtng_GR_qIwrldFMlyKLqcXp1FI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
 Content-Type: application/json
 
 { 
@@ -76,7 +76,7 @@ Authorization:
 ####
 
 #### Xem bài Post
-GET http://localhost:5000/api/post/can-ban-xe-toyota-7-cho-HwHSJ3Bo2
+GET http://localhost:5000/api/post/ban-xe-gia-cuc-re-queo-lua-tai-da-nang
 ####
 
 ### Xem tất cả bài Post
@@ -84,12 +84,14 @@ GET http://localhost:5000/api/post/all
 
 ###
 
+### Xem tất cả các bài Post theo id người dùng
+GET http://localhost:5000/api/post/list/60ae3da431f2b53c94774d58
+
 #### Xóa tất cả post của user
 DELETE http://localhost:5000/api/user/post/deleteall
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI2MzgwMDUsImV4cCI6MTYyMjcyNDQwNX0._oxklI7KOAr7fM18iSCG1sEUxYIiWC8ZT7hTmDctDq4
 
-
-###
+####
 
 ### Xóa bài post
 DELETE http://localhost:5000/api/user/post/60b2f0f0a0b04f3448adecee/delete
@@ -111,7 +113,7 @@ Content-Type: application/json
 
 ### Tạo một tin tức mới
 POST http://localhost:5000/api/admin/news/create
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIzNDYwMTIsImV4cCI6MTYyMjQzMjQxMn0.MlVPdLFoUIr_3q5QBhscNtqX2LOgpnn3J_PdOMmPZDU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
 Content-Type: application/json
 
 {
@@ -151,7 +153,7 @@ Content-Type: application/json
 }
 
 ### Đọc tin tức
-GET http://localhost:5000/api/news/nhung-diem-can-luu-y-khi-mua-ban-xe
+GET http://localhost:5000/api/news/mua-xe-can-chuan-bi-nhung-giay-to-gi
 
 ###
 
