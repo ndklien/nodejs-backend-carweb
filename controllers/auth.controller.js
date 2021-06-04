@@ -6,14 +6,16 @@ const bcrypt = require('bcryptjs');
 const { registerValidator } = require('../validations/authentication');
 
 const db = require('../models');
-const Role = db.role;
-const User = db.user;
 
 const mailgun = require("mailgun-js");
 const DOMAIN = 'sandboxe4476ed40d5747e1946f19345dfc475c.mailgun.org';
 const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN });
 
 const _ = require('lodash');
+const savedpostModel = require('../models/savedpost.model');
+const Role = db.role;
+const User = db.user;
+
 // Register for user
 exports.registerUser = async (req, res) => {
     const { err } = registerValidator(req.body);
@@ -45,10 +47,10 @@ exports.registerUser = async (req, res) => {
 
         if (req.body.roles) {
             Role.find(
-                { name: { $in: req.body.roles } },
+                { name: { $in: req.body.roles }},
                 (err, roles) => {
                     if (err) return res.status(500).send({ message: err });
-
+    
                     user.roles = roles.map(role => role._id);
                     user.save((err) => {
                         if (err) return res.status(500).send({ message: err });
@@ -66,6 +68,12 @@ exports.registerUser = async (req, res) => {
             });
         };
     });
+
+    const savedList = await new savedpostModel({
+        user: newUser
+    });
+
+    await savedList.save(savedList);
 
     try {
         return res.send({
@@ -90,27 +98,28 @@ exports.login = (req, res) => {
 
             //If password and email is correct
             const token = jwt.sign(
-                { _id: user._id },
+                { _id: user._id }, 
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: 60 * 60 * 24 });
 
             user.tokens = user.tokens.concat({ token });
             user.save();
-
+    
             var authorities = [];
 
-            for (let i = 0; i < user.roles.length; i++) {
+            for (let i=0; i < user.roles.length; i++) {
                 authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
             };
 
             return res
-                .status(200)
-                .json({
-                    user,
-                    roles: authorities,
-                    message: "Login successfully"
-                });
-        });
+            .status(200)
+            .json({
+                user,
+                roles: authorities,
+                userToken: token,
+                message: "Login successfully"
+            });
+    });
 };
 
 exports.logout = async (req, res) => {

@@ -1,24 +1,33 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
+var slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
 
 const articleSchema = new Schema({
     title: {
-        type: String, required: true,
+        type: String, 
+        required: true,
+        trim: true,
     },
     // Người đăng bài
     postedBy: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
     },
-    dateCreate: {
-        type: Date, 
-        default: Date.now
-    },
     content: {
         type: String,
     },
+    slug: {
+        type: String, 
+        slug: "title",
+        unique: true,
+    }, 
+    newsImage: {
+        type: String,
+    },
+}, {
+    timestamps: true,
+    toJSON: { virtuals: true },
 });
 
-const Article = mongoose.model('Article', articleSchema);
-
-module.exports = Article;
+module.exports = mongoose.model('Article', articleSchema);

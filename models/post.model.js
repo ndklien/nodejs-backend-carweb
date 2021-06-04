@@ -22,10 +22,6 @@ const postSchema = new Schema({
     postedBy: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User',
     },
-    dateCreated: {
-        type: Date,
-        default: Date.now,
-    },
     // Địa chỉ liên hệ
     contactProvince: {
         type: String,
@@ -42,10 +38,10 @@ const postSchema = new Schema({
     postContent: {
         type: String,
     },
-    postPics: [{
-        data: Buffer,
-        type: String,
-        // required: true,
+    postImage: [{
+        image: {
+            type: String
+        }
     }],
     // Xe nhập khẩu hay nội địa
     carType: {
@@ -82,8 +78,15 @@ const postSchema = new Schema({
     }, 
 }, 
 {
-    timestamps: true, toJSON: { virtuals: true }
+    timestamps: true,
+    toJSON: { virtuals: true }
 }
 );
+
+postSchema.method("toJSOn", () => {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
+});
 
 module.exports = mongoose.model('Post', postSchema);

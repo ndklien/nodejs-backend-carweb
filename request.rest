@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
     "fullname": "Chloe Ting",
-    "email": "chloe94@gmail.com",
-    "password": "chloe01",
+    "email": "chloe90@gmail.com",
+    "password": "chloe01"
 }
 
 #### Đăng kí Admin
@@ -20,12 +20,12 @@ Content-Type: application/json
 }
 
 ##### Lấy danh sách bài viết được đăng bởi người dùng đó
-GET http://localhost:5000/api/user/posted-list
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGE2OTIzMmE5ZjY4ZDJlNTQyODUzYTIiLCJpYXQiOjE2MjE2NjQ3NjAsImV4cCI6MTYyMTc1MTE2MH0.LTmdp6LuDJ-TQfjoUvigJD36tTb0Pmo1OxrJufpbDsY
+GET http://localhost:5000/api/user/list
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
 
 ####
 
-### Đăng nhập
+### Đăng nhập admin
 POST http://localhost:5000/api/auth/dangnhap
 Content-Type: application/json
 
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 ###
 
-### Đăng nhập Admin
+### Đăng nhập 
 POST http://localhost:5000/api/auth/dangnhap
 Content-Type: application/json
 
@@ -84,3 +84,120 @@ Content-Type: application/json
     "newPass": "mei",
     "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI4ZjM5NDJlMTNiODMwZjg0M2JhNzYiLCJpYXQiOjE2MjI3NzA3NTcsImV4cCI6MTYyMjg1NzE1N30.DbCEKhQRXQ24WeMKqubK4Neufvgu14JAUgFwXBfPGpE"
 }
+Authorization: 
+###
+
+### Tạo bài viết
+POST http://localhost:5000/api/user/post/create
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
+Content-Type: application/json
+
+{ 
+    "title": "Cần bán xe Toyota 7 chỗ",
+    "contactProvince": "Đà Nẵng", 
+    "contactDistrict": "Hải Sơn",
+    "contactPhone": "0812999999",
+    "postContent": "",
+    "carBrand": "Toyota",
+    "carOdometer": "3000", 
+    "carPrice": "500000000"
+}
+
+####
+
+### Đăng xuất tất cả
+POST http://localhost:5000/api/auth/dangxuat-all
+Authorization: 
+####
+
+#### Xem bài Post
+GET http://localhost:5000/api/post/ban-xe-gia-cuc-re-queo-lua-tai-da-nang
+####
+
+### Xem tất cả bài Post
+GET http://localhost:5000/api/post/all
+
+###
+
+### Xem tất cả các bài Post theo id người dùng
+GET http://localhost:5000/api/post/list/60ae3da431f2b53c94774d58
+
+#### Xóa tất cả post của user
+DELETE http://localhost:5000/api/user/post/deleteall
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI2MzgwMDUsImV4cCI6MTYyMjcyNDQwNX0._oxklI7KOAr7fM18iSCG1sEUxYIiWC8ZT7hTmDctDq4
+
+####
+
+### Xóa bài post
+DELETE http://localhost:5000/api/user/post/60b2f0f0a0b04f3448adecee/delete
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIzMzAyNjAsImV4cCI6MTYyMjQxNjY2MH0.pyQXTE3c2vkkAQqFDNk_MAK4f241W-MYuxPZP3sVaAU
+
+###
+
+### Sửa một bài đăng 
+PUT http://localhost:5000/api/user/post/60b1f8b2e07cee0e241474c6/edit
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIzMzAyNjAsImV4cCI6MTYyMjQxNjY2MH0.pyQXTE3c2vkkAQqFDNk_MAK4f241W-MYuxPZP3sVaAU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIzNDYwMTIsImV4cCI6MTYyMjQzMjQxMn0.MlVPdLFoUIr_3q5QBhscNtqX2LOgpnn3J_PdOMmPZDU
+Content-Type: application/json
+
+{
+    "title": "Cần bán xe VinFast 7 chỗ 500tr",
+    "carBrand": "VinFast"
+}
+###
+
+### Tạo một tin tức mới
+POST http://localhost:5000/api/admin/news/create
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
+Content-Type: application/json
+
+{
+    "title": "Những điểm cần lưu ý khi mua bán xe",
+    "content": "Bước 1: Kiểm tra ví tiền của bạn"
+}
+
+### 
+
+### Lấy danh sách tất cả các tin tức
+GET http://localhost:5000/api/news/all
+
+###
+
+### Xóa tin tức 
+DELETE http://localhost:5000/api/admin/news/60b32cf9e3d32011709d8064/delete
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIzNDk4MDgsImV4cCI6MTYyMjQzNjIwOH0.PNDSzFrMD9ZI5q0DrMopq1e7vG4XreXQy86Z-LlUYvE
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIzNDYwMTIsImV4cCI6MTYyMjQzMjQxMn0.MlVPdLFoUIr_3q5QBhscNtqX2LOgpnn3J_PdOMmPZDU
+ 
+####
+
+### Xóa tất cả tin tức
+DELETE http://localhost:5000/api/admin/news/deleteall
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIzNDYwMTIsImV4cCI6MTYyMjQzMjQxMn0.MlVPdLFoUIr_3q5QBhscNtqX2LOgpnn3J_PdOMmPZDU
+
+###
+
+### Sửa tin tức
+PUT http://localhost:5000/api/admin/news/60b32cf9e3d32011709d8064/edit
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIzNDk4MDgsImV4cCI6MTYyMjQzNjIwOH0.PNDSzFrMD9ZI5q0DrMopq1e7vG4XreXQy86Z-LlUYvE
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjIzNDYwMTIsImV4cCI6MTYyMjQzMjQxMn0.MlVPdLFoUIr_3q5QBhscNtqX2LOgpnn3J_PdOMmPZDU
+Content-Type: application/json
+
+{
+    "title": "Mua bán xe cần chú trọng điều gì", 
+    "content": "Cần có đủ tiền"
+}
+
+### Đọc tin tức
+GET http://localhost:5000/api/news/mua-xe-can-chuan-bi-nhung-giay-to-gi
+
+###
+
+### Lấy danh sách người dùng
+GET http://localhost:5000/api/admin/users
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjI2ODI1MDMsImV4cCI6MTYyMjc2ODkwM30.qiVXwuGbi-rx2kRVF88Uu-rL2LeWlGYaSMXsc6qmEgk
+
+###
+
+### Lưu bài viết 
+POST http://localhost:5000/api/user/saved/60b1f8b2e07cee0e241474c6
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
