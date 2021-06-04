@@ -33,6 +33,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "regexp": "^1.0.0",
+    "node-pickle": "0.0.2",
     "shortid": "^2.2.16"
   },
   "devDependencies": {

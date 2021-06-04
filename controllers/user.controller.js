@@ -115,11 +115,12 @@ exports.deleteAllPosts = (req, res) => {
         .catch(err => res.status(500).send({ message: err.message || "Failed to delete all Posts."}));
 };
 
-// Xóa có chọn lọc
+// Xóa có chọn lọc -- chưa
 exports.deleteChosenPosts = (req, res) => {
     Post.deleteMany()
 }
 
+// Lưu bài viết
 exports.addSavePost = (req, res) => {
     const postID = req.params.postID;
 
@@ -142,8 +143,14 @@ exports.addSavePost = (req, res) => {
                             return res.send({ message: "Save Post with id " + postID + " succeed!" });
                         } else {
                             // Kiểm tra trường hợp đã lưu bài này
-                            const checkPostExists = savedpostModel.findOne({ user: req.user, 'savedList.post': post })
-                            if (checkPostExists) {
+                            let checkPostExists = 0;
+                            saved.savedList.forEach((ele) => {
+                                if (ele.post == postID) {
+                                    checkPostExists += 1;
+                                }
+                            })
+
+                            if (checkPostExists > 0) {
                                 return res.status(400).send({ message: "Already Exists" });
                             }
                             saved.savedList = saved.savedList.concat({ post });
@@ -163,14 +170,52 @@ exports.addSavePost = (req, res) => {
         }));
 };
 
+// Lấy danh sách các bài viết đã lưu
 exports.getSavedPost = (req, res) => {
-    savedpostModel.find({ user: req.user })
+    savedpostModel.findOne({ user: req.user })
         .then(data => {
             if (!data) return res.status(404).send({ message: "Cannot find User Saved List with id " + req.userID });
             
-            else return res.json(data);
+            else {
+                // console.log(data.savedList);
+                let postList = [];
+                let len = data.savedList.length;
+                if (len === 0) return res.send({ message: "Saved List is empty" });
+                let i = 0;
+                data.savedList.forEach(ele => {
+                    Post.findById(ele.post)
+                        .then(post => {
+                            if (!post) return res.send({ message: "Post with id " + ele.post + " not found"});
+                            postList.push(post);
+                            if (++i === len) {
+                                return res.json(postList);
+                            }
+                        })
+                        .catch(err => res.status(500).send({ 
+                            message: err.message || "Failed to find Post"
+                        }))
+                })
+            }
         })
         .catch(err => res.status(500).json({
             message: err.message || "Failed to get User Saved Post List"
         }));
+};
+
+// Xoá bài đã lưu
+exports.removeSavedPost = (req, res) => {
+    const postRemove = req.params.postID;
+    Post.find({ _id: postRemove })
+        .then((post) => {
+            if (!post) return res.status(404).send({ message: "Cannot find Post with id " + postRemove });
+        })
+        .catch(err => res.status(500).send({ message: err.message || "Failed to find Post with id " + postRemove }));
+
+    savedpostModel.findOneAndUpdate({ user: req.user },{$pull: {savedList: {post: postRemove}}}, { returnOriginal: false })
+        .populate({path: "savedList", select: "post", model: "Post" })
+        .exec((err, data) => {
+            if (err) return res.status(500).send({ message: err.message || "Failed to find saved Post with id " + postRemove });
+
+            return res.json(data);
+        });
 };

@@ -35,6 +35,9 @@ router.get('/list', [authToken, isUser], userControll.getUserPost);
 // Lưu bài viết
 router.post('/saved/:postID', [authToken, isUser], userControll.addSavePost);
 
-router.get('/saved/list', [authToken, isUser], userControll.getSavedPost)
+// Lấy danh sách bài viết của người dùng
+router.get('/saved/list', [authToken, isUser], userControll.getSavedPost);
+
+router.put('/saved/remove/:postID', [authToken, isUser], userControll.removeSavedPost);
 
 module.exports = router;
