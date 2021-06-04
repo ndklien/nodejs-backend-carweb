@@ -2,8 +2,11 @@
 const { createPostValidator } = require('../validations/authentication');
 const Post = require('../models/post.model.js');
 const User = require('../models/user.model.js');
+const savedpostModel = require('../models/savedpost.model');
 
 const mongoose = require('mongoose');
+var ObjectId = require('mongodb').ObjectId; 
+
 
 exports.adminBoard = (req, res) => {
     return res.status(200).send("Admin Board");
@@ -116,3 +119,58 @@ exports.deleteAllPosts = (req, res) => {
 exports.deleteChosenPosts = (req, res) => {
     Post.deleteMany()
 }
+
+exports.addSavePost = (req, res) => {
+    const postID = req.params.postID;
+
+    // Tìm xem user đã tồn tại trong savepost collection chưa
+    savedpostModel.findOne({ user: req.user })
+        .then(saved => {
+            // Kiểm tra Post có tồn tại hay không
+            Post.findOne({ _id: postID })
+                .then(post => {
+                    if (!post) return res.status(404).send({ message: "Cannot find Post with id " + postID });
+                    else {
+                        // Nếu chưa có trong database
+                        if (!saved) {
+                            const newModel = new savedpostModel({
+                                user: req.user
+                            });
+            
+                            newModel.savedList = newModel.savedList.concat({ post });
+                            newModel.save(newModel);
+                            return res.send({ message: "Save Post with id " + postID + " succeed!" });
+                        } else {
+                            // Kiểm tra trường hợp đã lưu bài này
+                            const checkPostExists = savedpostModel.findOne({ user: req.user, 'savedList.post': post })
+                            if (checkPostExists) {
+                                return res.status(400).send({ message: "Already Exists" });
+                            }
+                            saved.savedList = saved.savedList.concat({ post });
+                            saved.save(saved);
+            
+                            return res.send({ message: "Save Post with id " + postID + " succeed!" });
+                        }
+                    }
+                })
+                .catch(err => res.status(500).send({
+                    message: err.message || "Failed to find Post to Save Post Model"
+                }));
+
+        })
+        .catch(err => res.status(500).send({
+            message: err.message || "Failed to find User to Save Post Model"
+        }));
+};
+
+exports.getSavedPost = (req, res) => {
+    savedpostModel.find({ user: req.user })
+        .then(data => {
+            if (!data) return res.status(404).send({ message: "Cannot find User Saved List with id " + req.userID });
+            
+            else return res.json(data);
+        })
+        .catch(err => res.status(500).json({
+            message: err.message || "Failed to get User Saved Post List"
+        }));
+};

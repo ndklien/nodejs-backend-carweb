@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
     "fullname": "Chloe Ting",
-    "email": "chloe94@gmail.com",
-    "password": "chloe01",
+    "email": "chloe90@gmail.com",
+    "password": "chloe01"
 }
 
 #### Đăng kí Admin
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ##### Lấy danh sách bài viết được đăng bởi người dùng đó
 GET http://localhost:5000/api/user/list
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjIzMzAyNjAsImV4cCI6MTYyMjQxNjY2MH0.pyQXTE3c2vkkAQqFDNk_MAK4f241W-MYuxPZP3sVaAU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
 
 ####
 
@@ -48,8 +48,7 @@ Content-Type: application/json
 
 ### Test đăng nhập 
 GET http://localhost:5000/api/user/userboard
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI2MzgwMDUsImV4cCI6MTYyMjcyNDQwNX0._oxklI7KOAr7fM18iSCG1sEUxYIiWC8ZT7hTmDctDq4
-
+Authorization: 
 ###
 
 ### Tạo bài viết
@@ -160,3 +159,9 @@ GET http://localhost:5000/api/news/mua-xe-can-chuan-bi-nhung-giay-to-gi
 ### Lấy danh sách người dùng
 GET http://localhost:5000/api/admin/users
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjI2ODI1MDMsImV4cCI6MTYyMjc2ODkwM30.qiVXwuGbi-rx2kRVF88Uu-rL2LeWlGYaSMXsc6qmEgk
+
+###
+
+### Lưu bài viết 
+POST http://localhost:5000/api/user/saved/60b1f8b2e07cee0e241474c6
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0

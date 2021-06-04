@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const { registerValidator } = require('../validations/authentication');
 
 const db = require('../models');
+const savedpostModel = require('../models/savedpost.model');
 const Role = db.role;
 const User = db.user;
 
@@ -62,6 +63,12 @@ exports.registerUser = async (req, res) => {
             });
         };
     });
+
+    const savedList = await new savedpostModel({
+        user: newUser
+    });
+
+    await savedList.save(savedList);
 
     try {
         return res.send({

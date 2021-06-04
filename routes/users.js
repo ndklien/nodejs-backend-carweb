@@ -35,5 +35,9 @@ router.delete('/post/deleteall', [authToken, isUser], userControll.deleteAllPost
 // Lấy danh sách tất cả các bài đăng của người đăng - có phân quyền để truy cập
 router.get('/list', [authToken, isUser], userControll.getUserPost);
 
+// Lưu bài viết
+router.post('/saved/:postID', [authToken, isUser], userControll.addSavePost);
+
+router.get('/saved/list', [authToken, isUser], userControll.getSavedPost)
 
 module.exports = router;
