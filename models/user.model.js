@@ -40,9 +40,7 @@ const userSchema = new Schema({
             required: true,
         }
     }], 
-    link: {
-        type: String
-    }   
+      
 }, {
     timestamps: true, toJSON: { virtuals: true }
 });
