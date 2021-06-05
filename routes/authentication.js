@@ -18,6 +18,9 @@ router.post('/dangnhap', authController.login);
 //Change information
 router.post('/changeaccount', authToken, authController.updateUser);
 
+//Đổi password
+router.post('/updatePassword', authToken, authController.updatePassword);
+
 // Quên password
 router.post('/forgotpassword', authController.forgotPassword);
 
@@ -30,4 +33,9 @@ router.post('/dangxuat-all', authToken, authController.logoutAll);
 // Logout in one device
 router.post('/dangxuat', authToken, authController.logout);
 
+//Login Facebook
+router.post('/loginFacebook', authController.loginFacebook);
+
+//Login Google
+router.post('/loginGoogle', authController.loginGoogle);
 module.exports = router;

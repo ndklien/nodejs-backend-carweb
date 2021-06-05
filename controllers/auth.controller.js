@@ -15,6 +15,12 @@ const _ = require('lodash');
 const savedpostModel = require('../models/savedpost.model');
 const Role = db.role;
 const User = db.user;
+const fetch = require('node-fetch');
+const { isBuffer } = require('lodash');
+const { OAuth2Client } = require('google-auth-library');
+const { response } = require('express');
+
+const client = new OAuth2Client('855027359850-qfobtd2aaju1tk8bh70unnv0kcak19ve.apps.googleusercontent.com')
 
 // Register for user
 exports.registerUser = async (req, res) => {
@@ -47,10 +53,10 @@ exports.registerUser = async (req, res) => {
 
         if (req.body.roles) {
             Role.find(
-                { name: { $in: req.body.roles }},
+                { name: { $in: req.body.roles } },
                 (err, roles) => {
                     if (err) return res.status(500).send({ message: err });
-    
+
                     user.roles = roles.map(role => role._id);
                     user.save((err) => {
                         if (err) return res.status(500).send({ message: err });
@@ -98,28 +104,28 @@ exports.login = (req, res) => {
 
             //If password and email is correct
             const token = jwt.sign(
-                { _id: user._id }, 
+                { _id: user._id },
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: 60 * 60 * 24 });
 
             user.tokens = user.tokens.concat({ token });
             user.save();
-    
+
             var authorities = [];
 
-            for (let i=0; i < user.roles.length; i++) {
+            for (let i = 0; i < user.roles.length; i++) {
                 authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
             };
 
             return res
-            .status(200)
-            .json({
-                user,
-                roles: authorities,
-                userToken: token,
-                message: "Login successfully"
-            });
-    });
+                .status(200)
+                .json({
+                    user,
+                    roles: authorities,
+                    userToken: token,
+                    message: "Login successfully"
+                });
+        });
 };
 
 exports.logout = async (req, res) => {
@@ -165,24 +171,25 @@ exports.updateUser = async (req, res) => {
 
 //Change password
 
-// exports.updatePassword = async (req, res) => {
-//     try { 
-//         const salt = await bcrypt.genSalt(10);
-//         const hashPassword = await bcrypt.hash(req.body.password, salt);
-//         User.findOne({ email: req.body.email }, (err, user) =>{        
-//             const checkPassword = bcrypt.compareSync(req.body.password, user.password);
-//             if (!checkPassword) 
-//                 return res.status(422).send({ message: "Password is incorrect" });
-//         })
-//         const user = await User.findByIdAndUpdate(req.user.id, {
-//             password: hashPassword
-//         }, function (err, docs) { });   
-//         res.status(200).json(user)
+exports.updatePassword = async (req, res) => {
+    try {
+        User.findOne({ email: req.body.email }, (err, user) => {
+            const checkPassword = bcrypt.compareSync(req.body.password, user.password);
+            if (!checkPassword)
+                return res.status(422).send({ message: "Password is incorrect" });
+        })
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(req.body.password, salt);
+        const user = await User.findByIdAndUpdate(req.user.id, {
 
-//     } catch (error) {
-//         res.status(409).json({ message: error.message })
-//     }
-// }
+            password: hashPassword
+        }, function (err, docs) { });
+        res.status(200).json(user)
+
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
+}
 
 //forgot Password
 exports.forgotPassword = async (req, res) => {
@@ -229,6 +236,8 @@ exports.forgotPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
     try {
         const { resetLink, newPass } = req.body;
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(newPass, salt);
         if (resetLink) {
             jwt.verify(resetLink, process.env.RESET_PASSWORD_KEY, function (error, decodedData) {
                 if (error) {
@@ -236,14 +245,13 @@ exports.resetPassword = async (req, res) => {
                         error: "Incorrect token or it is expored"
                     })
                 }
-
                 User.findOne({ resetLink }, (err, user) => {
                     if (err || !user) {
                         return res.status(400).json({ error: "User with this token does not exist" });
                     }
 
                     const obj = {
-                        password: newPass,
+                        password: hashPassword,
                         resetLink: ''
                     }
                     user = _.extend(user, obj);
@@ -261,5 +269,187 @@ exports.resetPassword = async (req, res) => {
         }
     } catch (error) {
         res.status(404).json({ message: error.message })
-    }  
+    }
+}
+
+exports.loginFacebook = async (req, res) => {
+    let email = '';
+    let name = '';
+    const userID = req.body.userID;
+    const accessToken = req.body.accessToken;
+    let urlGraphFacebook = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`;
+    await fetch(urlGraphFacebook,
+        {
+            method: 'GET'
+        })
+        .then(res => res.json())
+        .then(res => {
+            const { email, name } = res;
+        })
+    try {
+        const user = await User.findOne({ email })
+        // .populate("roles", "-__v")
+        // .exec((err, user) => {
+        //     if (err) {
+        //         return res.status(400).json({
+        //             error: 'Something went wrong'
+        //         })
+        //     } else {
+        if (user) {
+            const token = jwt.sign(
+                { _id: user._id },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: 60 * 60 * 24 });
+            user.tokens = user.tokens.concat({ token });
+            user.save();
+
+            var authorities = [];
+
+            for (let i = 0; i < user.roles.length; i++) {
+                authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+            };
+            return res
+                .status(200)
+                .json({
+                    user,
+                    roles: authorities,
+                    userToken: token,
+                    message: "Login successfully"
+                });
+        } else {
+            const password = email + process.env.ACCESS_TOKEN_SECRET;
+            const salt = await bcrypt.genSalt(10);
+            const hashPassword = await bcrypt.hash(password, salt);
+            const userInfor = {
+                fullname: name,
+                email: email,
+                password: hashPassword,
+                address: '',
+                phone: '',
+                resetLink: '',
+            }
+            let newUser = new User(userInfor);
+            newUser.save((err, data) => {
+                if (err) {
+                    return res.status(400).json({
+                        error: "Something went wrong..."
+                    })
+                }
+                const token = jwt.sign(
+                    { _id: newUser._id },
+                    process.env.ACCESS_TOKEN_SECRET,
+                    { expiresIn: 60 * 60 * 24 });
+                newUser.tokens = newUser.tokens.concat({ token });
+                newUser.tokens = newUser.tokens.concat({ token });
+                newUser.save();
+
+                var authorities = [];
+
+                for (let i = 0; i < newUser.roles.length; i++) {
+                    authorities.push("ROLE_" + newUser.roles[i].name.toUpperCase());
+                };
+                return res
+                    .status(200)
+                    .json({
+                        newUser,
+                        roles: authorities,
+                        newUserToken: token,
+                        message: "Login successfully"
+                    });
+            })
+        }
+        //     }
+        // })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+exports.loginGoogle = async (req, res) => {
+    const { tokenId } = req.body;
+    client.verifyIdToken({ idToken: tokenId, audience: '855027359850-qfobtd2aaju1tk8bh70unnv0kcak19ve.apps.googleusercontent.com' })
+        .then(response => {
+            const { email_verified, name, email } = response.payload;
+        })
+
+    try {
+        if (email_verified) {
+            const user = await User.findOne({ email })
+            // .populate("roles", "-__v")
+            // .exec((err, user) => {
+            //     if (err) {
+            //         return res.status(400).json({
+            //             error: 'Something went wrong'
+            //         })
+            //     } else {
+            if (user) {
+                const token = jwt.sign(
+                    { _id: user._id },
+                    process.env.ACCESS_TOKEN_SECRET,
+                    { expiresIn: 60 * 60 * 24 });
+                user.tokens = user.tokens.concat({ token });
+                user.save();
+
+                var authorities = [];
+
+                for (let i = 0; i < user.roles.length; i++) {
+                    authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+                };
+                return res
+                    .status(200)
+                    .json({
+                        user,
+                        roles: authorities,
+                        userToken: token,
+                        message: "Login successfully"
+                    });
+            } else {
+                const password = email + process.env.ACCESS_TOKEN_SECRET;
+                const salt = await bcrypt.genSalt(10);
+                const hashPassword = await bcrypt.hash(password, salt);
+                const userInfor = {
+                    fullname: name,
+                    email: email,
+                    password: hashPassword,
+                    address: '',
+                    phone: '',
+                    resetLink: '',
+                }
+                let newUser = new User(userInfor);
+                newUser.save((err, data) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: "Something went wrong..."
+                        })
+                    }
+                    const token = jwt.sign(
+                        { _id: newUser._id },
+                        process.env.ACCESS_TOKEN_SECRET,
+                        { expiresIn: 60 * 60 * 24 });
+                    newUser.tokens = newUser.tokens.concat({ token });
+                    newUser.tokens = newUser.tokens.concat({ token });
+                    newUser.save();
+
+                    var authorities = [];
+
+                    for (let i = 0; i < newUser.roles.length; i++) {
+                        authorities.push("ROLE_" + newUser.roles[i].name.toUpperCase());
+                    };
+                    return res
+                        .status(200)
+                        .json({
+                            newUser,
+                            roles: authorities,
+                            newUserToken: token,
+                            message: "Login successfully"
+                        });
+                })
+            }
+        }
+
+        //     }
+        // })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
 }
