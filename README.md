@@ -7,7 +7,7 @@ To run this project, you need to cover these steps:
     - ATLAS_URI: *MongoDB address*
     - ACCESS_TOKEN_SECRET: *jwt token secret key as to create token while login*
     - REFRESH_TOKEN_SECRET: optional, but not needed
-    - AWS_SECRET_KEY_ID: IAM Key on AWS service, after creating an account for accessing the S3 bucket, it will return a SECRET_KEY and an KEY
+    - AWS_SECRET_KEY_ID: IAM Key on AWS service, after creating an account for accessing the S3 bucket, it will return a SECRET_KEY_ID and a SECRET_KEY
     - AWS_KEY: IAM Secret Key, appear once. If you forgot, please create a new IAM account with AWS directions.
     - MAILGUN_APIKEY: *Key for Mailgun*
     - CLIENT_URL: *setup client url, as for development, we use http://localhost:5000*
