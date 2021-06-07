@@ -70,7 +70,7 @@ const postSchema = new Schema({
     },
     // Năm sản xuất
     carYear: {
-        type: Number,
+        type: String,
     },
     carPrice: {
         type: Number,

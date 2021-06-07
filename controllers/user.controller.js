@@ -34,7 +34,7 @@ exports.createNewPost = (req, res) => {
     
     if (err) return res.status(422).send(err.details[0].message);
 
-    const { title, postContent, contactDistrict, contactProvince, contactPhone, carBrand, carModel, carType, 
+    const { title, postContent, contactDistrict, contactProvince, contactPhone, carBrand, carModel, carType, carYear,
     carSeats, carColor, carFuelType, carOdometer, carPrice, postedBy } = req.body;
     
     const newPost = new Post({
@@ -52,6 +52,7 @@ exports.createNewPost = (req, res) => {
         carType,
         carSeats,
         carColor,
+        carYear,
         carFuelType,
         carOdometer,
         carPrice
