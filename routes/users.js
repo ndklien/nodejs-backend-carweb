@@ -1,7 +1,7 @@
 'use strict';
 const router = require('express').Router();
 const { authToken, isAdmin, isUser } = require('../middlewares/auth');
-const { userBoard, adminBoard } = require('../controllers/user.controller');
+const { getUserInfo, adminBoard } = require('../controllers/user.controller');
 const userControll = require('../controllers/user.controller');
 
 const { uploadS3post,  } = require('../middlewares/s3');
@@ -9,7 +9,7 @@ const { uploadS3post,  } = require('../middlewares/s3');
 // Endpoint starts with /api/user
 
 // Lấy thông tin người dùng
-router.get('/userboard', [authToken, isUser], userBoard );
+router.get('/account', [authToken, isUser], getUserInfo);
 
 router.get('/adminboard', [authToken, isAdmin], adminBoard );
 

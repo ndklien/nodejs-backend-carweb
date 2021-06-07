@@ -40,10 +40,14 @@ POST http://localhost:5000/api/auth/dangnhap
 Content-Type: application/json
 
 {
-    "email": "chloe90@gmail.com",
+    "email": "chloe94@gmail.com",
     "password": "chloe01"
 }
 
+
+### Lấy thông tin người dùng
+GET http://localhost:5000/api/user/account
+# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI5Y2Q5MTFjMGVkOTFmY2MxNGNmNDIiLCJpYXQiOjE2MjMwNjA3NjQsImV4cCI6MTYyMzE0NzE2NH0._maYYCtpYg6GAzfawHfwZB3JEtwQ3COU6A1ArEI2icQ
 
 ### Test đăng nhập 
 GET http://localhost:5000/api/user/userboard

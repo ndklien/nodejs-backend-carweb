@@ -5,15 +5,20 @@ const User = require('../models/user.model.js');
 const savedpostModel = require('../models/savedpost.model');
 
 const mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectId; 
-
 
 exports.adminBoard = (req, res) => {
     return res.status(200).send("Admin Board");
 };
 
-exports.userBoard = (req, res) => {
-    return res.status(200).json(req.user);
+exports.getUserInfo = (req, res) => {
+    User.findById(req.userID)
+        .then((data) => {
+            if (!data) return res.status(404).send({ message: "Cannot find User information" });
+            else return res.json(data);
+        })
+        .catch((err) => res.status(500).send({
+            message: err.message || "Failed to get User Information"
+        }));
 };
 
 // Post related controller 
