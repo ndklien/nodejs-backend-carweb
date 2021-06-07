@@ -17,4 +17,7 @@ router.get('/:slug', postControll.readPost);
 // Lấy danh sách bài đăng theo id người dùng
 router.get('/list/:userID', postControll.getUserPost);
 
+// Lấy danh sách bài post theo brand
+router.get('/list/brand/:brand', postControll.getPost_byBrand);
+
 module.exports = router;

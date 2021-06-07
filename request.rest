@@ -207,3 +207,11 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJi
 ### Xóa bài viết ra khỏi danh sách lưu
 PUT http://localhost:5000/api/user/saved/remove/60b1f8b2e07cee0e241474c6
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
+
+
+### Lấy danh sách post lọc theo brand
+GET http://localhost:5000/api/post/list/brand/Toyota
+
+####
+
+

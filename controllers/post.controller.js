@@ -95,3 +95,18 @@ exports.getUserPost = (req, res) => {
         })
         .catch(err => res.status(500).send({ message: err.message || "Failed to find User by User ID" }));
 };
+
+// Lấy danh sách bài đăng theo thương hiệu
+exports.getPost_byBrand = (req, res) => {
+    const brand = req.params.brand;
+
+    Post.find({ carBrand: brand })
+        .then((data) => {
+            if (!data) return res.status(404).send({ message: "Cannot find any Brand with name " + brand });
+
+            else return res.json(data);
+        })
+        .catch((err) => res.status(500).send({
+            message: err.message || "Failed to load Posts with Brand named " + brand
+        }));
+};
