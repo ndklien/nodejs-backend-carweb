@@ -14,7 +14,11 @@ router.deleteAll_Post = (req, res) => {
 
 router.getAll_User = (req, res) => {
     User.find({})
-        .then(data => res.json(data))
+        .then(data => {
+            if (!data) return res.status(404).send({ message: "Cannot get any Users" });
+
+            else return res.json(data);
+        })
         .catch(err => res.status(400).send({ message: err.message || "Failed to get all users"}));
 };
 module.exports = router;

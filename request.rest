@@ -45,6 +45,15 @@ Content-Type: application/json
 }
 
 
+#####
+
+### Lấy thông tin tất cả người dùng
+GET http://localhost:5000/api/admin/users
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMxNDkwMDEsImV4cCI6MTYyMzIzNTQwMX0.2W5_enXwKqdKGVjRx2tUJsBcclR9p2CN8E5QgCCDCIo
+
+
+####
+
 ### Lấy thông tin người dùng
 GET http://localhost:5000/api/user/account
 # Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI5Y2Q5MTFjMGVkOTFmY2MxNGNmNDIiLCJpYXQiOjE2MjMwNjA3NjQsImV4cCI6MTYyMzE0NzE2NH0._maYYCtpYg6GAzfawHfwZB3JEtwQ3COU6A1ArEI2icQ
@@ -105,7 +114,8 @@ Content-Type: application/json
 
 ### Đăng xuất tất cả
 POST http://localhost:5000/api/auth/dangxuat-all
-Authorization: 
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMxNDkwMDEsImV4cCI6MTYyMzIzNTQwMX0.2W5_enXwKqdKGVjRx2tUJsBcclR9p2CN8E5QgCCDCIo
+
 ####
 
 #### Xem bài Post
