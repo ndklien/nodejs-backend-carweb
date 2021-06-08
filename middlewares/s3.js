@@ -52,6 +52,7 @@ exports.uploadS3news = multer({
         region,
         contentType: multerS3.AUTO_CONTENT_TYPE,
         ACL: 'public-read',
+        cacheControl: 'max-age=31536000',
         metadata:  (req, file, cb) => {
           cb(null, { fieldName: file.fieldname });
         },
