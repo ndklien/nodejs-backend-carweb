@@ -9,7 +9,8 @@ const { createArticleValidator } = require('../validations/authentication');
 
 // Lấy danh sách tin tức
 exports.getAllNews = (req, res) => {
-    Article.find({})
+    Article.find({}).sort({ createdAt : 'desc' })
+        .populate("postedBy", "fullname")
         .then(articles => {
             if (!articles) return res.status(404).send({ message: "Cannot get all News Articles" });
             else return res.json(articles);
@@ -20,23 +21,11 @@ exports.getAllNews = (req, res) => {
 // Đọc một mẩu tin
 exports.readNews = (req, res) => {
     Article.findOne({ slug: req.params.slug })
+        .populate("postedBy", "fullname")
         .then(data => {
             if (!data) return res.status(404).send({ message: "Cannot get Article with slug " + req.params.slug });
             else {
-                const authorID = data.postedBy;
-                User.findOne({ _id: authorID })
-                    .then(author => {
-                        if (!author) return res.status(404).send({ message: "Cannot find author with id" + authorID });
-                        else {
-                            const authorName = author.fullname;
-                            return res.json({
-                                article: data,
-                                authorName: authorName
-                            });
-                        }
-                    })
-                    .catch(err => res.status(500).send({ message: err.message || "Failed to get Author with authorID"}));
-                // return res.json(data);
+                return res.json(data);
             }
         })
         .catch(err => res.status(500).send({ message: err.message || "Failed to get Article with slug " + req.params.slug }));
@@ -88,6 +77,7 @@ exports.deleteAll_News = (req, res) => {
         .catch(err => res.status(400).send({ message: err.message || "Failed when deleting all Articles" }));
 };
 
+// Xóa 1 bài tin tức 
 exports.deleteArticle = (req, res) => {
     const id = req.params.id;
     Article.findByIdAndRemove(id, { useFindAndModify: false })

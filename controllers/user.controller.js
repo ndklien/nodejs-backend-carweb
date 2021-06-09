@@ -11,7 +11,7 @@ exports.adminBoard = (req, res) => {
 };
 
 exports.getUserInfo = (req, res) => {
-    User.findById(req.userID)
+    User.findById(req.userID, { tokens: 0, resetLink: 0})
         .then((data) => {
             if (!data) return res.status(404).send({ message: "Cannot find User information" });
             else return res.json(data);
@@ -179,6 +179,7 @@ exports.addSavePost = (req, res) => {
 // Lấy danh sách các bài viết đã lưu
 exports.getSavedPost = (req, res) => {
     savedpostModel.findOne({ user: req.user })
+        
         .then(data => {
             if (!data) return res.status(404).send({ message: "Cannot find User Saved List with id " + req.userID });
             
@@ -190,6 +191,7 @@ exports.getSavedPost = (req, res) => {
                 let i = 0;
                 data.savedList.forEach(ele => {
                     Post.findById(ele.post)
+                        .populate("postedBy", "fullname")
                         .then(post => {
                             if (!post) return res.send({ message: "Post with id " + ele.post + " not found"});
                             postList.push(post);

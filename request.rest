@@ -49,14 +49,14 @@ Content-Type: application/json
 
 ### Lấy thông tin tất cả người dùng
 GET http://localhost:5000/api/admin/users
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMxNDkwMDEsImV4cCI6MTYyMzIzNTQwMX0.2W5_enXwKqdKGVjRx2tUJsBcclR9p2CN8E5QgCCDCIo
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMxOTkyMDYsImV4cCI6MTYyMzI4NTYwNn0.45b5s29A2QNet7GrrsToXsOXQ2t9pNatNAYfvZGKFHo
 
 
 ####
 
 ### Lấy thông tin người dùng
 GET http://localhost:5000/api/user/account
-# Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI5Y2Q5MTFjMGVkOTFmY2MxNGNmNDIiLCJpYXQiOjE2MjMwNjA3NjQsImV4cCI6MTYyMzE0NzE2NH0._maYYCtpYg6GAzfawHfwZB3JEtwQ3COU6A1ArEI2icQ
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMxOTkyMDYsImV4cCI6MTYyMzI4NTYwNn0.45b5s29A2QNet7GrrsToXsOXQ2t9pNatNAYfvZGKFHo
 
 ### Test đăng nhập 
 GET http://localhost:5000/api/user/userboard
@@ -202,25 +202,25 @@ GET http://localhost:5000/api/news/mua-xe-can-chuan-bi-nhung-giay-to-gi
 
 ### Lấy danh sách người dùng
 GET http://localhost:5000/api/admin/users
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjI2ODI1MDMsImV4cCI6MTYyMjc2ODkwM30.qiVXwuGbi-rx2kRVF88Uu-rL2LeWlGYaSMXsc6qmEgk
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMyMDU2NzEsImV4cCI6MTYyMzI5MjA3MX0.VKzPSiwXo2TaGEnqttgexffFX8yPdWtD-qpoZ0UrVXo
 
 ###
 
 ### Lưu bài viết 
-POST http://localhost:5000/api/user/saved/60b1f8b2e07cee0e241474c6
+POST http://localhost:5000/api/user/saved/60bf7ad55341b918a44945b4
 # Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMxOTkyMDYsImV4cCI6MTYyMzI4NTYwNn0.45b5s29A2QNet7GrrsToXsOXQ2t9pNatNAYfvZGKFHo
 
 ###
 
 ### Xem danh sách bài viết đã lưu
 GET http://localhost:5000/api/user/saved/list
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMxOTkyMDYsImV4cCI6MTYyMzI4NTYwNn0.45b5s29A2QNet7GrrsToXsOXQ2t9pNatNAYfvZGKFHo
 
 ###
 ### Xóa bài viết ra khỏi danh sách lưu
-PUT http://localhost:5000/api/user/saved/remove/60b1f8b2e07cee0e241474c6
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
+PUT http://localhost:5000/api/user/saved/remove/60bf7ad55341b918a44945b4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDFhNTIwN2EwZTNhNDA3MjVkNWEiLCJpYXQiOjE2MjMxOTkyMDYsImV4cCI6MTYyMzI4NTYwNn0.45b5s29A2QNet7GrrsToXsOXQ2t9pNatNAYfvZGKFHo
 
 
 ### Lấy danh sách post lọc theo brand
