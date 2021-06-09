@@ -45,7 +45,7 @@ exports.createNews = (req, res) => {
 
     newsArticle.postedBy = req.user;
 
-    if (req.file === 'undefined') {
+    if (!req.file) {
         console.log("No Image");
     } else {
         newsArticle.newsImage = req.file.location;
