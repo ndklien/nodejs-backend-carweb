@@ -43,10 +43,10 @@ exports.searchPost = async (req, res) => {
 
 // read all Posts
 exports.getAll_Posts = (req, res) => {
-    Post.find({})
-        .then(data => {
-            if (!data) return res.status(400).send({ message: "Cannot find any Posts"});
-
+    Post.find({}).sort({ updatedAt : 'desc' })
+        .populate("postedBy", "fullname")
+        .then((data) => {
+            if (!data) return res.status(404).send({ message: "Cannot find any Posts" });
             else return res.json(data);
         })
         .catch(err => res.status(400).send({ message: err.message || "Failed to get all Posts"}));
@@ -79,7 +79,7 @@ exports.readPost = (req, res) => {
 // Lấy danh sách bài đăng theo id người dùng
 exports.getUserPost = (req, res) => {
     const userID = req.params.userID;
-    User.findOne({ _id: userID })
+    User.findOne({ _id: userID }).sort({ createdAt : 'desc' })
         .then(user => {
             if (!user) return res.status(404).send({ message: "Cannot find user with id " + userID });
 
@@ -94,4 +94,20 @@ exports.getUserPost = (req, res) => {
                 .catch(err => res.status(500).send({ message: err.message || "Failed to find posts by User ID" }));
         })
         .catch(err => res.status(500).send({ message: err.message || "Failed to find User by User ID" }));
+};
+
+// Lấy danh sách bài đăng theo thương hiệu
+exports.getPost_byBrand = (req, res) => {
+    const brand = req.params.brand;
+
+    Post.find({ carBrand: brand }).sort({ updatedAt : 'desc' })
+        .populate("postedBy", "fullname")
+        .then((data) => {
+            if (!data) return res.status(404).send({ message: "Cannot find any Brand with name " + brand });
+
+            else return res.json(data);
+        })
+        .catch((err) => res.status(500).send({
+            message: err.message || "Failed to load Posts with Brand named " + brand
+        }));
 };

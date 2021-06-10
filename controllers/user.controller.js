@@ -5,15 +5,20 @@ const User = require('../models/user.model.js');
 const savedpostModel = require('../models/savedpost.model');
 
 const mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectId; 
-
 
 exports.adminBoard = (req, res) => {
     return res.status(200).send("Admin Board");
 };
 
-exports.userBoard = (req, res) => {
-    return res.status(200).json(req.user);
+exports.getUserInfo = (req, res) => {
+    User.findById(req.userID, { tokens: 0, resetLink: 0})
+        .then((data) => {
+            if (!data) return res.status(404).send({ message: "Cannot find User information" });
+            else return res.json(data);
+        })
+        .catch((err) => res.status(500).send({
+            message: err.message || "Failed to get User Information"
+        }));
 };
 
 // Post related controller 
@@ -34,7 +39,7 @@ exports.createNewPost = (req, res) => {
     
     if (err) return res.status(422).send(err.details[0].message);
 
-    const { title, postContent, contactDistrict, contactProvince, contactPhone, carBrand, carModel, carType, 
+    const { title, postContent, contactDistrict, contactProvince, contactPhone, carBrand, carModel, carType, carYear,
     carSeats, carColor, carFuelType, carOdometer, carPrice, postedBy } = req.body;
     
     const newPost = new Post({
@@ -52,6 +57,7 @@ exports.createNewPost = (req, res) => {
         carType,
         carSeats,
         carColor,
+        carYear,
         carFuelType,
         carOdometer,
         carPrice
@@ -173,6 +179,7 @@ exports.addSavePost = (req, res) => {
 // Lấy danh sách các bài viết đã lưu
 exports.getSavedPost = (req, res) => {
     savedpostModel.findOne({ user: req.user })
+        
         .then(data => {
             if (!data) return res.status(404).send({ message: "Cannot find User Saved List with id " + req.userID });
             
@@ -184,6 +191,7 @@ exports.getSavedPost = (req, res) => {
                 let i = 0;
                 data.savedList.forEach(ele => {
                     Post.findById(ele.post)
+                        .populate("postedBy", "fullname")
                         .then(post => {
                             if (!post) return res.send({ message: "Post with id " + ele.post + " not found"});
                             postList.push(post);
