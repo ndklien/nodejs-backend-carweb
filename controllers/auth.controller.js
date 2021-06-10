@@ -8,7 +8,7 @@ const { registerValidator } = require('../validations/authentication');
 const db = require('../models');
 
 const mailgun = require("mailgun-js");
-const DOMAIN = 'sandboxe4476ed40d5747e1946f19345dfc475c.mailgun.org';
+const DOMAIN = "sandboxe4476ed40d5747e1946f19345dfc475c.mailgun.org";
 const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN });
 
 const _ = require('lodash');
@@ -173,18 +173,19 @@ exports.updateUser = async (req, res) => {
 
 exports.updatePassword = async (req, res) => {
     try {
-        User.findOne({ email: req.body.email }, (err, user) => {
-            const checkPassword = bcrypt.compareSync(req.body.password, user.password);
-            if (!checkPassword)
-                return res.status(422).send({ message: "Password is incorrect" });
-        })
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(req.body.password, salt);
-        const user = await User.findByIdAndUpdate(req.user.id, {
+        const id = req.params.id;
+        const user = await User.findById(id)
+        if (user) {
+            const checkPassword = await bcrypt.compareSync(req.body.oldPassword, user.password);
 
+            if (!checkPassword) return res.status(422).send({ message: "Password is incorrect" });
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(req.body.newPassword, salt);
+        const userPassword = await User.findByIdAndUpdate(id, {
             password: hashPassword
-        }, function (err, docs) { });
-        res.status(200).json(user)
+        });
+        return res.status(200).json({ data: userPassword })
 
     } catch (error) {
         res.status(409).json({ message: error.message })
@@ -193,49 +194,43 @@ exports.updatePassword = async (req, res) => {
 
 //forgot Password
 exports.forgotPassword = async (req, res) => {
-    const { email } = req.body;
-    User.findOne({ email })
-        .populate("roles", "-__v")
-        .exec((err, user) => {
-            if (err) return res.status(500).send({ message: err });
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email })
+        if (!user) return res.status(422).send({ message: "Email not found!" });
+        //If email is correct
+        const token = jwt.sign(
+            { _id: user._id },
+            process.env.RESET_PASSWORD_KEY,
+            { expiresIn: 60 * 60 * 24 });
 
-            if (!user) return res.status(422).send({ message: "Email not found!" });
-            //If email is correct
-            const token = jwt.sign(
-                { _id: user._id },
-                process.env.RESET_PASSWORD_KEY,
-                { expiresIn: 60 * 60 * 24 });
+        const data = {
+            from: 'noreply@carthrift.com',
+            to: email,
+            subject: 'Account Activation Link',
+            html: `
+                        <h2>Please click on given link to reset you password</h2>
+                        <p>${process.env.CLIENT_URL}/resetpassword/${token}`
+        };
 
-            const data = {
-                from: 'noreply@carthrift.com',
-                to: email,
-                subject: 'Account Activation Link',
-                html: `
-                    <h2>Please click on given link to reset you password</h2>
-                    <p>${process.env.CLIENT_URL}/resetpassword/${token}`
-            };
-
-            return user.updateOne({ resetLink: token }, function (err, seccess) {
-                if (err) {
-                    return res.status(400).json({ error: "reset password link error" });
-                } else {
-                    mg.messages().send(data, function (error, body) {
-                        if (error) {
-                            return res.json({
-                                error: err.message
-                            })
-                        }
-                        return res.json({ message: "Email has been sent, kindly follow the link" });
-                    });
-                }
-            })
+        const userupdate = await User.findByIdAndUpdate(user._id, { resetLink: token }, { new: true });
+        await mg.messages().send(data, function (error, body) {
+            if (error) {
+                res.status(200).json({ message: error.message })
+            }
+            else res.status(200).json({ result: userupdate})
         });
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
 };
 
-// Reset pass
+
+
 exports.resetPassword = async (req, res) => {
     try {
-        const { resetLink, newPass } = req.body;
+        const resetLink = req.params.token;
+        const { newPass } = req.body;
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(newPass, salt);
         if (resetLink) {
@@ -272,6 +267,9 @@ exports.resetPassword = async (req, res) => {
     }
 }
 
+
+
+
 exports.loginFacebook = async (req, res) => {
     let email = '';
     let name = '';
@@ -288,13 +286,6 @@ exports.loginFacebook = async (req, res) => {
         })
     try {
         const user = await User.findOne({ email })
-        // .populate("roles", "-__v")
-        // .exec((err, user) => {
-        //     if (err) {
-        //         return res.status(400).json({
-        //             error: 'Something went wrong'
-        //         })
-        //     } else {
         if (user) {
             const token = jwt.sign(
                 { _id: user._id },
@@ -358,8 +349,6 @@ exports.loginFacebook = async (req, res) => {
                     });
             })
         }
-        //     }
-        // })
     } catch (error) {
         res.status(404).json({ message: error.message })
     }

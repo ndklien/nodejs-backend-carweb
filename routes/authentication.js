@@ -19,13 +19,13 @@ router.post('/dangnhap', authController.login);
 router.post('/changeaccount', authToken, authController.updateUser);
 
 //Đổi password
-router.post('/updatePassword', authToken, authController.updatePassword);
+router.post('/:id/updatePassword', authToken, authController.updatePassword);
 
 // Quên password
 router.post('/forgotpassword', authController.forgotPassword);
 
 // Reset Password
-router.post('/resetpassword', authController.resetPassword);
+router.post('/resetpassword/:token', authController.resetPassword);
 
 // Logout in all device
 router.post('/dangxuat-all', authToken, authController.logoutAll);

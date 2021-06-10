@@ -75,10 +75,10 @@ POST http://localhost:5000/api/auth/resetpassword
 Content-Type: application/json
 
 {
-    "newPass": "mei",
-    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI4ZjM5NDJlMTNiODMwZjg0M2JhNzYiLCJpYXQiOjE2MjI3NzA3NTcsImV4cCI6MTYyMjg1NzE1N30.DbCEKhQRXQ24WeMKqubK4Neufvgu14JAUgFwXBfPGpE"
+    "newPass": "meimei",
+    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYjhmMzk0MmUxM2I4MzBmODQzYmE3NiIsImlhdCI6MTYyMzI2NzQ4NywiZXhwIjoxNjIzMjY4Njg3fQ.Fz5bIvV3Op61OWRHXH3sGOmEpRRrrNKPq7x30Aa6epQ"
+    
 }
-Authorization: 
 ###
 
 ### Tạo bài viết
@@ -207,3 +207,4 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJi
 ### Xóa bài viết ra khỏi danh sách lưu
 PUT http://localhost:5000/api/user/saved/remove/60b1f8b2e07cee0e241474c6
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlM2RhNDMxZjJiNTNjOTQ3NzRkNTgiLCJpYXQiOjE2MjI3Nzc1NDMsImV4cCI6MTYyMjg2Mzk0M30.grBWr6gNtdnA0M4L9GcndQC0FJ0n9ecNlwttqjvdQj0
+
