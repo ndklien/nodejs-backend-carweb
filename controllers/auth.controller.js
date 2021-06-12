@@ -210,7 +210,7 @@ exports.forgotPassword = async (req, res) => {
             subject: 'Account Activation Link',
             html: `
                         <h2>Please click on given link to reset you password</h2>
-                        <p>${process.env.CLIENT_URL}/resetpassword/${token}`
+                        <p>${process.env.CLIENT_URL}/quenmatkhau/${token}`
         };
 
         const userupdate = await User.findByIdAndUpdate(user._id, { resetLink: token }, { new: true });
@@ -244,7 +244,6 @@ exports.resetPassword = async (req, res) => {
                     if (err || !user) {
                         return res.status(400).json({ error: "User with this token does not exist" });
                     }
-
                     const obj = {
                         password: hashPassword,
                         resetLink: ''

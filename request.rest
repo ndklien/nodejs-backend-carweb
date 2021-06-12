@@ -84,13 +84,11 @@ Content-Type: application/json
 }
 
 ####Reset pass
-POST http://localhost:5000/api/auth/resetpassword
+POST http://localhost:5000/api/auth/resetpassword/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYjhmMzk0MmUxM2I4MzBmODQzYmE3NiIsImlhdCI6MTYyMzI2NzQ4NywiZXhwIjoxNjIzMjY4Njg3fQ.Fz5bIvV3Op61OWRHXH3sGOmEpRRrrNKPq7x30Aa6epQ
 Content-Type: application/json
 
 {
-    "newPass": "meimei",
-    "resetLink": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYjhmMzk0MmUxM2I4MzBmODQzYmE3NiIsImlhdCI6MTYyMzI2NzQ4NywiZXhwIjoxNjIzMjY4Njg3fQ.Fz5bIvV3Op61OWRHXH3sGOmEpRRrrNKPq7x30Aa6epQ"
-    
+    "newPass": "meimei"
 }
 ###
 
