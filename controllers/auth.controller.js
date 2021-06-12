@@ -259,7 +259,7 @@ exports.resetPassword = async (req, res) => {
                 })
             })
         } else {
-            return res.status(401).json({ error: "Authercation error!!!" });
+            return res.status(401).json({ error: "Authencation error!!!" });
         }
     } catch (error) {
         res.status(404).json({ message: error.message })
