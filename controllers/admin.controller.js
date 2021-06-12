@@ -8,7 +8,7 @@ const User = require('../models/user.model');
 // Xóa tất cả các bài post
 router.deleteAll_Post = (req, res) => {
     Post.deleteMany({})
-        .then(data => res.send({ message: `${data.deletedCount} Posts were deleted successfully by Admin.` }))
+        .then(data => res.send({ message: `${data.deletedCount} Posts đã bị xóa Admin.` }))
         .catch(err => res.send({
             message: err.message || "Failed to delete all Posts by Admin"
         }));

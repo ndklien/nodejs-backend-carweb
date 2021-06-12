@@ -65,7 +65,7 @@ exports.updateNews = (req, res) => {
         .then(data => {
             if (!data) return res.status(400).send({ message: "Cannot update Article with id " + id });
 
-            else return res.send({ message: "Update Article successfully!"});
+            else return res.send({ message: "Cập nhật Article thành công"});
         })
         .catch(err => res.status(400).send({ message: err.message || "Failed to update Article with id " + id}));
 }
@@ -73,7 +73,7 @@ exports.updateNews = (req, res) => {
 // Xóa tất cả trong danh sách tin tức
 exports.deleteAll_News = (req, res) => {
     Article.deleteMany({})
-        .then(data => res.send({ message: `${data.deletedCount} Posts were deleted successfully.`}))
+        .then(data => res.send({ message: `${data.deletedCount} Posts đã được xóa thành công`}))
         .catch(err => res.status(400).send({ message: err.message || "Failed when deleting all Articles" }));
 };
 
@@ -84,7 +84,7 @@ exports.deleteArticle = (req, res) => {
         .then(data => {
             if (!data) return res.status(404).send({ message: "Cannot find article with id " + id });
 
-            else return res.send({ message: "Deleted Article with id " + id });
+            else return res.send({ message: "Xóa Article với id " + id + " thành công"});
         })
         .catch(err => res.status(500).send({
             message: err.message || "Failed to delete Article with id" + id

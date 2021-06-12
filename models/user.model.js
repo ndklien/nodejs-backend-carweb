@@ -40,7 +40,10 @@ const userSchema = new Schema({
             required: true,
         }
     }], 
-      
+    isVerify: {
+        type: String,
+        unique: true,
+    },
 }, {
     timestamps: true, toJSON: { virtuals: true }
 });

@@ -96,7 +96,7 @@ exports.updatePost = (req, res) => {
         .then(data => {
             if (!data) return res.status(400).send({ message: "Cannot update Post with id " + id });
 
-            else return res.send({ message: "Update Post successfully!"});
+            else return res.send({ message: "Cập nhật Post thành công"});
         })
         .catch(err => res.status(400).send({ message: err.message || "Failed to update Post with id " + id}));
 }
@@ -109,7 +109,7 @@ exports.deletePost = (req, res) => {
         .then(data => {
             if (!data) return res.status(404).send({ message: "Cannot delete post with id " + id });
 
-            else return res.send({ message: "Delete post with id " + id + " successfully." });
+            else return res.send({ message: "Xóa Post với id " + id + " thành công." });
         })
         .catch(err => res.status(500).send({ message: err.message || "Failed while deleting post with id " + id }));
 };
@@ -117,7 +117,7 @@ exports.deletePost = (req, res) => {
 // Xóa tất cả bài đăng
 exports.deleteAllPosts = (req, res) => {
     Post.deleteMany({ postedBy: req.userID })
-        .then(data => res.send({ message: `${data.deletedCount} Posts were deleted successfully.`}))
+        .then(data => res.send({ message: `${data.deletedCount} Posts đã được xóa.`}))
         .catch(err => res.status(500).send({ message: err.message || "Failed to delete all Posts."}));
 };
 
@@ -146,7 +146,7 @@ exports.addSavePost = (req, res) => {
             
                             newModel.savedList = newModel.savedList.concat({ post });
                             newModel.save(newModel);
-                            return res.send({ message: "Save Post with id " + postID + " succeed!" });
+                            return res.send({ message: "Lưu Post với id " + postID + " thành công!" });
                         } else {
                             // Kiểm tra trường hợp đã lưu bài này
                             let checkPostExists = 0;
@@ -157,12 +157,12 @@ exports.addSavePost = (req, res) => {
                             })
 
                             if (checkPostExists > 0) {
-                                return res.status(400).send({ message: "Already Exists" });
+                                return res.status(400).send({ message: "Bài viết đã được lưu" });
                             }
                             saved.savedList = saved.savedList.concat({ post });
                             saved.save(saved);
             
-                            return res.send({ message: "Save Post with id " + postID + " succeed!" });
+                            return res.send({ message: "Lưu Post với id " + postID + " thành công!" });
                         }
                     }
                 })
@@ -187,7 +187,7 @@ exports.getSavedPost = (req, res) => {
                 // console.log(data.savedList);
                 let postList = [];
                 let len = data.savedList.length;
-                if (len === 0) return res.send({ message: "Saved List is empty" });
+                if (len === 0) return res.send({ message: "Danh sách lưu đang rỗng" });
                 let i = 0;
                 data.savedList.forEach(ele => {
                     Post.findById(ele.post)
